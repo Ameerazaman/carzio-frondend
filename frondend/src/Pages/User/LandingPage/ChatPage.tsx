@@ -26,7 +26,7 @@ const ChatPage: React.FC<ChatProps> = ({ senderId, receiverId, username }) => {
 
     useEffect(() => {
         // Initialize socket connection once
-        const socket = io("http://localhost:5000");
+        const socket = io("https://carzio.store/api",);
 
         // Fetch chat history
         const fetchChatHistory = async () => {
