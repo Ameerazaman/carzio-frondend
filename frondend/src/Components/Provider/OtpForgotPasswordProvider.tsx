@@ -1,11 +1,12 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { resend, verifyOtp } from '../../Api/User';
+
 import { useNavigate } from 'react-router-dom';
 
 import { toast } from 'react-hot-toast';
+import { resend, verifyOtp } from '../../Api/Provider';
 
 
-const Otp: React.FC = () => {
+const OtpForgotPasswordProvider: React.FC = () => {
   const [timer, setTimer] = useState<number>(50); 
   const [isTimerActive, setIsTimerActive] = useState<boolean>(true); 
   const [otp, setOtp] = useState<string[]>(Array(6).fill('')); 
@@ -78,13 +79,11 @@ const Otp: React.FC = () => {
 
       if (result.success) {
         toast.success('OTP verified and user saved successfully');
-        navigate('/login');  // Redirect to login page on success
+        navigate('/provider/otp_change_password');  // Redirect to login page on success
       } else {
-        console.log('OTP verification failed.');
         toast.error(result.message || 'OTP verification failed.');
       }
     } catch (error) {
-      console.error('Error during OTP verification:', error);
       toast.error('Error during OTP verification. Please try again.');
     }
   };
@@ -93,7 +92,7 @@ const Otp: React.FC = () => {
     <div className="min-h-screen flex justify-center items-center bg-white">
       <div className="flex w-full max-w-3xl shadow-lg rounded-lg overflow-hidden relative">
         <div className="flex-1 flex flex-col justify-center items-center bg-gray-100 p-4 md:p-6 relative z-10">
-          <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-black">Enter OTP</h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-black">Enter OTP P</h2>
           <p className="text-gray-600 mb-4 text-center text-sm md:text-base">We have sent you an OTP on your registered mobile number.</p>
 
           <form className="w-full max-w-xs" onSubmit={handleSubmit}>
@@ -153,4 +152,4 @@ const Otp: React.FC = () => {
   );
 }
 
-export default Otp;
+export default OtpForgotPasswordProvider;

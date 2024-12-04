@@ -34,16 +34,16 @@ const signup = async ({ email, password, confirmPassword, username }: signupForm
             email,
             password,
             confirmPassword,
-            username, 
+            username,
         });
         if (result.data.success) {
-            return { success: true }; 
+            return { success: true };
         } else {
             return { success: false, message: result.data.message || 'Signup failed.' };
         }
     } catch (error) {
         if (error instanceof AxiosError && error.response) {
-           
+
             return { success: false, message: error.response.data.message || 'An error occurred during signup.' };
         } else {
             console.log(error as Error);
@@ -76,9 +76,9 @@ const verifyOtp = async (otp: string) => {
             return { success: false, message: result.data.message || 'OTP verification failed.' };
         }
     } catch (error: any) {
-   
+
         if (error.response) {
-          
+
             return { success: false, message: error.response.data.message || 'OTP verification failed.' };
         } else {
 
@@ -112,26 +112,41 @@ const userLogout = async () => {
 
     }
 };
-
-
+//**********************const forgot password******************************
+const forgotPassword = async (email: string) => {
+    try {
+        const result = await userApi.post(userRouter.forgotPassword, { email })
+        if (result) {
+            return result
+        }
+    } catch (error) {
+        errorHandler(error as Error);
+    }
+}
+// **************************change password**************************
+const changePassword = async (password: string) => {
+    try {
+      const result = await userApi.post(userRouter.changePassword, { password });
+      console.log(result,"result")
+      return result;
+    } catch (error) {
+      errorHandler(error as Error);
+    }
+  };
+  
 // **************************fetch cars ******************************
 const fetchCars = async (page: number, limit: number) => {
     try {
-
         const result = await userApi.get(userRouter.fetchCar, {
             params: {
                 page,
                 limit
             }
         })
-        if (result) {
-            return result
-        }
+        return result
     } catch (error) {
         errorHandler(error as Error);
-
     }
-
 }
 // *******************car Details Page *************************
 const carDetail = async (id: string) => {
@@ -141,7 +156,7 @@ const carDetail = async (id: string) => {
             return result
         }
     } catch (error) {
-    
+
         errorHandler(error as Error);
 
     }
@@ -425,11 +440,11 @@ const getWalletPage = async (userId: string, page: number, limit: number) => {
 // ****************************create review and ratings***************
 const createReviewAndRatings = async (reviewData: reviewDataInterface): Promise<any> => {
     try {
-        const result = await userApi.post(userRouter.createReviewRatings, reviewData); 
+        const result = await userApi.post(userRouter.createReviewRatings, reviewData);
         return result.data;
     } catch (error) {
 
-        errorHandler(error as Error); 
+        errorHandler(error as Error);
         throw error;
     }
 };
@@ -446,7 +461,7 @@ const checkBookidInReview = async (bookId: string): Promise<any> => {
         return result;
     } catch (error) {
 
-        errorHandler(error as Error); 
+        errorHandler(error as Error);
         throw error;
     }
 }
@@ -455,14 +470,14 @@ const checkBookidInReview = async (bookId: string): Promise<any> => {
 
 const fetchChat = async (userId: string, providerId: string): Promise<any> => {
     try {
-    
+
         const result = await userApi.get(`/chat_history/${userId}/${providerId}`)
-        return result.data;  
-        
+        return result.data;
+
     } catch (error) {
- 
+
         errorHandler(error as Error);
-        throw error; 
+        throw error;
     }
 };
 
@@ -470,20 +485,20 @@ const fetchChat = async (userId: string, providerId: string): Promise<any> => {
 const searchCarAvailabilty = async (issueDate: string, returnDate: string): Promise<any> => {
     try {
 
-      const result = await userApi.get(userRouter.searchCarAvailabilty, {
-        params: {
-          issueDate,
-          returnDate,
-        },
-      });
-      return result;
+        const result = await userApi.get(userRouter.searchCarAvailabilty, {
+            params: {
+                issueDate,
+                returnDate,
+            },
+        });
+        return result;
     } catch (error) {
 
-      errorHandler(error as Error); 
-      throw error;
+        errorHandler(error as Error);
+        throw error;
     }
-  };
-  
+};
+
 
 export {
     signup,
@@ -510,7 +525,6 @@ export {
     getBookingHistory,
     specificBookingDetails,
     cancelBookingByUser,
-  
     checkingBookedOrNot,
     checkBalanceUpdateWallet,
     storeCancelAmtToWallet,
@@ -518,6 +532,8 @@ export {
     createReviewAndRatings,
     checkBookidInReview,
     fetchChat,
-    searchCarAvailabilty
+    searchCarAvailabilty,
+    forgotPassword,
+    changePassword
 
 };

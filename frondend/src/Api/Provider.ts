@@ -91,7 +91,28 @@ const verifyOtp = async (otp: string) => {
     }
 
 };
-
+//**********************const forgot password******************************
+const forgotPassword = async (email: string) => {
+    try {
+        const result = await providerAPI.post(providerRouter.forgotPassword, { email })
+        if (result) {
+            return result
+        }
+    } catch (error) {
+        errorHandler(error as Error);
+    }
+}
+// **************************change password**************************
+const changePassword = async (password: string) => {
+    try {
+      const result = await providerAPI.post(providerRouter.changePassword, { password });
+      console.log(result,"result")
+      return result;
+    } catch (error) {
+      errorHandler(error as Error);
+    }
+  };
+  
 // ******************************login provider*******************************
 const loginProvider = async ({ email, password }: signupFormData) => {
     try {
@@ -416,5 +437,7 @@ export {
     fetchUsersChat,
     fetchChat,
     getDashboardConstData,
-    fetchSalesReport
+    fetchSalesReport,
+    forgotPassword,
+    changePassword
 };

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 
 
-const Otp: React.FC = () => {
+const OtpForgotPassword: React.FC = () => {
   const [timer, setTimer] = useState<number>(50); 
   const [isTimerActive, setIsTimerActive] = useState<boolean>(true); 
   const [otp, setOtp] = useState<string[]>(Array(6).fill('')); 
@@ -78,13 +78,11 @@ const Otp: React.FC = () => {
 
       if (result.success) {
         toast.success('OTP verified and user saved successfully');
-        navigate('/login');  // Redirect to login page on success
+        navigate('/otp_change_password');  // Redirect to login page on success
       } else {
-        console.log('OTP verification failed.');
         toast.error(result.message || 'OTP verification failed.');
       }
     } catch (error) {
-      console.error('Error during OTP verification:', error);
       toast.error('Error during OTP verification. Please try again.');
     }
   };
@@ -153,4 +151,4 @@ const Otp: React.FC = () => {
   );
 }
 
-export default Otp;
+export default OtpForgotPassword;

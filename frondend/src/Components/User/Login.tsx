@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { loginUser } from '../../Api/User';
@@ -55,8 +55,8 @@ function Login() {
     try {
       // Call loginUser with form data
       const response = await loginUser(formData);
-     
-     
+
+
       if (response) {
         dispatch(signInSuccess(response.data.user.data))
         localStorage.setItem('token', response.data.user.refreshToken); // Store the token
@@ -72,8 +72,6 @@ function Login() {
     }
   };
 
-
-
   return (
     <div>
       <div className="flex h-screen w-full items-center justify-center bg-gray-100">
@@ -86,13 +84,13 @@ function Login() {
             <div className="p-8">
               <h1 className="text-3xl font-black text-slate-700">Sign in</h1>
               <p className="mt-2 mb-5 text-base leading-tight text-gray-600">
-                Create an account to get access to 1000+ Freebies
+                Drive Your Dreams, Rent with Ease!
               </p>
               <form onSubmit={submitData} className="mt-8">
                 <div className="relative mt-2 w-full">
                   <input
                     onChange={(e) => setEmail(e.target.value)}
-                    value={email} // bind the trimmed value
+                    value={email}
                     type="text"
                     id="email"
                     className="border-1 peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0"
@@ -124,7 +122,7 @@ function Login() {
                   {errors.password && <p className="text-red-500">{errors.password}</p>}
                 </div>
                 <input
-                  className="mt-4 w-full cursor-pointer rounded-lg bg-red-600 pt-3 pb-3 text-white shadow-lg hover:bg-red-500"
+                  className="mt-4 w-full cursor-pointer rounded-lg bg-slate-600 pt-3 pb-3 text-white shadow-lg hover:bg-red-500"
                   type="submit"
                   value="Login"
                 />
@@ -134,12 +132,21 @@ function Login() {
                   Already have an account?
                   <a
                     href="/signup"
-                    className="font-bold text-red-600 no-underline hover:text-red-500"
+                    className="font-bold text-blue-600 no-underline hover:text-blue-400"
                   >
                     Sign up
                   </a>
                 </p>
+                <p className="text-sm text-gray-600">
+                  <Link
+                    to="/forgot_password"
+                    className="font-bold text-green-600 no-underline hover:text-green-500"
+                  >
+                    Forgot password?
+                  </Link>
+                </p>
               </div>
+
             </div>
           </div>
         </div>

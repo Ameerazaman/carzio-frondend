@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { loginProvider } from '../../Api/Provider'
@@ -136,6 +136,14 @@ function ProviderLogin() {
                   >
                     Sign up
                   </a>
+                </p>
+                <p className="text-sm text-gray-600">
+                  <Link
+                    to="/provider/forgot_password"
+                    className="font-bold text-green-600 no-underline hover:text-green-500"
+                  >
+                    Forgot password?
+                  </Link>
                 </p>
               </div>
             </div>

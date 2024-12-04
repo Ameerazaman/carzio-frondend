@@ -7,10 +7,15 @@ import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
 
-
 const stripePromise = loadStripe('pk_test_51QJq7aDRjWHiMHMFbKsTqHRDHPep0XNgdvdjLwN8gWxkZpn2mMKx4fKXm0fQLjusUKKqRfFPzd17w52FH9Koe07800Ce8IksDd');
 // Lazy loading components
 
+const ForgotPassword = lazy(() => import('./Components/User/ForgotPassword'));
+const OtpForgotPassword = lazy(() => import('./Components/User/OtpForgotPassword'));
+const ChangePassword = lazy(() => import('./Components/User/ChangePassword'));
+const ForgotPasswordProvider = lazy(() => import('./Components/Provider/ForgotPasswordProvider'));
+const OtpForgotPasswordProvider = lazy(() => import('./Components/Provider/OtpForgotPasswordProvider'));
+const ChangePasswordProvider = lazy(() => import('./Components/Provider/ChangePasswordProvider'));
 const BookingReportProvider =lazy(()=>import( './Components/Provider/BookingReportProvider'));
 const BookingReport =lazy(()=>import('./Components/Admin/BookingReport')) ;
 const DashboardProvider = lazy(() => import('./Components/Provider/DashboardProvider'));
@@ -89,8 +94,9 @@ function App() {
             <Route path='/booking_history' element={<BookingHistory />} />
             <Route path='/view_details/:bookingId' element={<UserHistoryDetails />} />
             <Route path='/wallet' element={<WalletPage />} />
-
-
+            <Route path='/forgot_password' element={<ForgotPassword />} />
+            <Route path='/otp_forgot_password' element={<OtpForgotPassword />} />
+            <Route path='/otp_change_password' element={<ChangePassword />} />
 
             {/* ************************************Provider Side*************************** */}
 
@@ -106,6 +112,10 @@ function App() {
             <Route path='/provider/chat' element={<Chat />} />
             <Route path="/provider/dashboard" element={<DashboardProvider />} />
             <Route path="/provider/sales_report" element={<BookingReportProvider />} />
+            <Route path='/provider/forgot_password' element={<ForgotPasswordProvider />} />
+            <Route path='/provider/otp_forgot_password' element={<OtpForgotPasswordProvider />} />
+            <Route path='/provider/otp_change_password' element={<ChangePasswordProvider />} />
+            
             {/* *************************************Admin Side**************************** */}
 
             <Route path="/admin/login" element={<LoginAdmin />} />

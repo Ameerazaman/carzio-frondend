@@ -32,7 +32,7 @@ const ChatPage: React.FC<ChatProps> = ({ senderId, receiverId, username }) => {
         const fetchChatHistory = async () => {
             const response = await fetchChat(senderId, receiverId);
             const data: Message[] = await response.data;
-            setChatHistory(data.reverse()); // Reverse to show latest at the bottom
+            setChatHistory(data); // Reverse to show latest at the bottom
         };
 
         fetchChatHistory();
