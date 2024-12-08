@@ -1,7 +1,8 @@
 import React from 'react'
 import Navbar from '../../Pages/Admin/Commons/Navbar'
 import EditUser from '../../Pages/Admin/EditUser'
-import Sidebar from '../../Pages/Provider/Sidebar'
+import Sidebar from '../../Pages/Admin/Commons/Sidebar'
+
 
 function EditProviderMgt() {
   let header:string="provider"

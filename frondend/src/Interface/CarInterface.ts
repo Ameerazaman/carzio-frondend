@@ -17,5 +17,5 @@ export interface CarDataInterface {
     pollutionExpiry: string;
     providerId?: string;
     id?:string;
-    
+    isBlocked?:boolean
 }

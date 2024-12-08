@@ -12,16 +12,13 @@ import { signOutAdmin } from "../App/Slice/AdminSlice";
 // **********************************Axios instance for User********************
 export { }
 const userApi: AxiosInstance = axios.create({
- baseURL: "http://localhost:5000/api/users",
+  baseURL: "http://localhost:5000/api/users",
   // baseURL: "https://carzio.store/api/users",
   withCredentials: true
 });
 
 userApi.interceptors.response.use(
   (response) => {
-    if (response.data.message) {
-      toast.success(response.data.message);
-    }
     return response;
   },
   async (error) => {
@@ -67,15 +64,13 @@ userApi.interceptors.response.use(
 
 const providerAPI: AxiosInstance = axios.create({
   baseURL: "http://localhost:5000/api",
- // baseURL: "https://carzio.store/api",
+  // baseURL: "https://carzio.store/api",
   withCredentials: true
 });
 
 providerAPI.interceptors.response.use(
   (response) => {
-    if (response.data.message) {
-      toast.success(response.data.message);
-    }
+    
     return response;
   },
   async (error) => {
@@ -116,6 +111,7 @@ providerAPI.interceptors.response.use(
 // **********************************Axios instance for Admin********************
 
 const adminAPI: AxiosInstance = axios.create({
+ 
   baseURL: "http://localhost:5000/api",
   // baseURL: "https://carzio.store/api",
   withCredentials: true
@@ -123,9 +119,6 @@ const adminAPI: AxiosInstance = axios.create({
 
 adminAPI.interceptors.response.use(
   (response) => {
-    if (response.data.message) {
-      toast.success(response.data.message);
-    }
     return response;
   },
   async (error) => {

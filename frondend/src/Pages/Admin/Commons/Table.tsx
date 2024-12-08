@@ -15,9 +15,7 @@ const Table: React.FC<TableProps> = ({ tableData: initialTableData, header }) =>
   const [tableData, setTableData] = useState(initialTableData);
   let navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(tableData, 'data');
-  }, [tableData]);
+
 
   const handleEdit = async (id: string) => {
     if (header === "user") {
@@ -51,11 +49,11 @@ const Table: React.FC<TableProps> = ({ tableData: initialTableData, header }) =>
         confirmButtonText: 'Yes, change status',
         cancelButtonText: 'No, cancel',
       });
-  
+
       if (result.isConfirmed) {
         console.log("id check", id);
         let statusUpdateResult;
-  
+
         if (header === "user") {
           statusUpdateResult = await updateStatus(id);
         } else if (header === "cars") {
@@ -70,7 +68,7 @@ const Table: React.FC<TableProps> = ({ tableData: initialTableData, header }) =>
         } else {
           statusUpdateResult = await updateStatusProvider(id);
         }
-  
+
         if (statusUpdateResult) {
           // Show success alert
           Swal.fire({
@@ -82,7 +80,7 @@ const Table: React.FC<TableProps> = ({ tableData: initialTableData, header }) =>
           if (statusUpdateResult) {
             setTableData((prevTableData) =>
               prevTableData.map((data) =>
-                data.id === id
+                data.id === id || data._id === id
                   ? {
                       ...data,
                       isBlocked: data.hasOwnProperty('isBlocked') ? !data.isBlocked : data.isBlocked,
@@ -95,11 +93,11 @@ const Table: React.FC<TableProps> = ({ tableData: initialTableData, header }) =>
           
         }
       } else {
-       
+
       }
     } catch (error) {
-    
-      
+
+
       // Show error alert
       Swal.fire({
         title: 'Error!',
@@ -109,7 +107,7 @@ const Table: React.FC<TableProps> = ({ tableData: initialTableData, header }) =>
       });
     }
   };
-  
+
   return (
     <table className="min-w-full bg-white border-collapse">
       <thead>
@@ -262,7 +260,7 @@ const Table: React.FC<TableProps> = ({ tableData: initialTableData, header }) =>
                       className={`py-1 px-3 rounded-full ${data?.isActive ? 'bg-red-600 text-white' : 'bg-green-600 text-white'
                         } cursor-pointer`}
                     >
-                      {data?.isActive ? 'Active' : 'Block'}
+                      {data?.isActive ? 'Block' : 'Active'}
                     </button>
                   </td>
                 </>
@@ -270,15 +268,15 @@ const Table: React.FC<TableProps> = ({ tableData: initialTableData, header }) =>
                 <>
                   <td className="py-2 px-4 border-b">{index + 1}</td>
                   <td className="py-2 px-4 border-b">{data?.email || "N/A"}</td>
-                  <td className="py-2 px-4 border-b">{header === 'user' ? data?.username || "N/A" : data?.usernamev || "N/A"}</td> {/* Adjust the data */}
+                  <td className="py-2 px-4 border-b">{header === 'user' ? data?.username || "N/A" : data?.username || "N/A"}</td> {/* Adjust the data */}
                   <td className="py-2 px-4 border-b text-center">
-                    <button onClick={() => handleEdit(data?.id)} className="text-blue-600 hover:text-blue-800">
+                    <button onClick={() => handleEdit(data?._id)} className="text-blue-600 hover:text-blue-800">
                       <FaEdit />
                     </button>
                   </td>
                   <td className="py-2 px-4 border-b text-center">
                     <button
-                      onClick={() => handleStatus(data?.id)}
+                      onClick={() => handleStatus(data?._id)}
                       className={`py-1 px-3 rounded-full ${data?.isBlocked ? 'bg-red-600 text-white' : 'bg-green-600 text-white'
                         } cursor-pointer`}
                     >

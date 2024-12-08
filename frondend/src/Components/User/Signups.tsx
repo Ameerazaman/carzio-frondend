@@ -32,7 +32,15 @@ function Signup() {
     if (!password) {
       validationErrors.password = 'Password is required';
     }
-
+    if (password.length < 6) {
+      validationErrors.password = 'Password must be at least 6 characters long';
+    }
+    if (/\s/.test(password)) {
+      validationErrors.password = 'Password should not contain spaces';
+    }
+    if (!/[A-Z]/.test(password)) {
+      validationErrors.password = 'Password must include at least one uppercase letter';
+    }
     // Check if username is empty or contains spaces
     if (!username) {
       validationErrors.userName = 'Username is required';

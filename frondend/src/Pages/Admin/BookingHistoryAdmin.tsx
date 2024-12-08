@@ -14,7 +14,6 @@ const BookingHistoryAdmin : React.FC<TableProps> = ({ bookingHistory: initialTab
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Booking History</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>

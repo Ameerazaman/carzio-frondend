@@ -11,7 +11,7 @@ function EditCarMgt() {
                 {/* <Sidebar /> */}
 
                 <div className="flex-1 p-6 bg-gray-100">
-                    <h1 className="text-2xl font-bold mb-4">Car Management</h1>
+                    <h1 className="text-2xl font-bold mb-4">Edit Car</h1>
                     <div className="overflow-x-auto bg-white rounded-lg shadow-md">
                         <EditCar />
                     </div>

@@ -1,20 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { searchCarAvailabilty } from '../../Api/User';
 import { CarDataInterface } from '../../Interface/CarInterface';
+import { useNavigate } from 'react-router-dom';
 
 // Sample slide data
 const slides = [
 
-  { image: '/images/hyundai-creta.webp', title: 'Affordable Cars for Rent', date: '2024-01-01' },
-  { image: '/images/family-car.jpg', title: 'Perfect Family Cars for Every Journey', date: '2024-02-01' },
- ];
+  { image: '/images/hyundai-creta.webp', title: 'The journey is yours to design—your rental car is the brush.', date: '2024-01-01' },
+  { image: '/images/family-car.jpg', title: 'Freedom begins with a full tank and a rented ride', date: '2024-02-01' },
+];
 
 interface CarouselProps {
   onEvent: (data: CarDataInterface[]) => void; // Define the type for the prop
 }
 
 const Carosel: React.FC<CarouselProps> = ({ onEvent }) => {
-
+  const navigate = useNavigate()
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');

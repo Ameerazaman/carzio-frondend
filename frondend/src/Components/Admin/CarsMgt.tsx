@@ -21,6 +21,7 @@ function CarsMgt() {
         const result = await carManagementt(page, limit);
 
         if (result?.data?.data) {
+          console.log(result.data.data)
           setTableData(result.data.data);
           setTotalPages(result.data.totalPage || 1);
         } else {

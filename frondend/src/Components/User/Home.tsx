@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Navbar from '../../Pages/Common/Navbar';
 import Carosel from '../../Pages/Common/Carosel';
 import Card from '../../Pages/Common/Card';
 import Footer from '../../Pages/Common/Footer';
 import { fetchCars } from '../../Api/User';
 import { CarDataInterface } from '../../Interface/CarInterface';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ServicesCard from '../../Pages/User/LandingPage/ServicesCard';
 import Pagination from '../../Pages/Common/Pagination';
 import Loading from '../../Pages/Common/Loading';
@@ -18,6 +18,9 @@ function Home() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const limit = 6;
+
+  // Reference to the card section
+  const cardSectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,27 +49,30 @@ function Home() {
     }
   };
 
-  const handleSearhCar = (data: CarDataInterface[]) => {
-
+  // Function to handle searching/selecting a car
+  const handleSearchCar = (data: CarDataInterface[]) => {
     setCarData(data);
-    setTotalPages(1)
+    setTotalPages(1);
+
+    // Scroll to the card section when a car is selected
+    cardSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-
-
 
   return (
     <div>
       <Navbar />
-      <Carosel onEvent={handleSearhCar} />
+      <Carosel onEvent={handleSearchCar} />
       <ServicesCard />
-      
+
       <div className="text-center mb-1">
         <h3 className="text-3xl font-bold text-gray-800 mb-1">Come with</h3>
         <h4 className="text-lg font-semibold text-red-600">Our Products</h4>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+
+      {/* Card Section */}
+      <div ref={cardSectionRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
         {loading ? (
-          <Loading/>
+          <Loading />
         ) : error ? (
           <p className="text-red-500">{error}</p>
         ) : (
@@ -79,12 +85,13 @@ function Home() {
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />
-        
-        <div className="mt-12">
-                <Footer />
-            </div>
+
+      <div className="mt-12">
+        <Footer />
+      </div>
     </div>
   );
 }
 
 export default Home;
+
