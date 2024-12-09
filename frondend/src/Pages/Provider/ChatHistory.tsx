@@ -29,32 +29,38 @@ const ChatHistory: React.FC = () => {
   const senderId = provider?._id || "";
 
   useEffect(() => {
-    const socket = io("https://carzio.store/api",);
-    setSocket(socket);
-
+    // Initialize the socket connection
+    const newSocket = io("https://carzio.store");
+    // const newSocket = io("http://localhost:5000");
+    setSocket(newSocket);  // Set the socket
+  
     const fetchUsers = async () => {
       try {
         const result = await fetchUsersChat(senderId);
         const usersData = result.data as Message[];
         const uniqueUsers = Array.from(new Map(usersData.map((user: Message) => [user.senderId, user])).values());
         setUsers(uniqueUsers);
-
-        if (senderId) {
-          socket.emit("register", senderId);
+  
+        if (senderId && newSocket) {
+          newSocket.emit("register", senderId);  // Register when socket is initialized
         }
-        socket.on("receive_message", (newMessage: Message) => {
+  
+        newSocket.on("receive_message", (newMessage: Message) => {
           setChatHistory((prev) => [...prev, newMessage]);
         });
+  
+        // Cleanup function to disconnect the socket when the component unmounts or senderId changes
         return () => {
-          socket.disconnect();
+          newSocket.disconnect();
         };
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
-
+  
     fetchUsers();
-  }, [senderId]);
+  }, [senderId]);  // Re-run the effect when senderId changes
+  
 
   const selectUser = async (user: Message) => {
     setSelectedUser(user);
@@ -68,7 +74,7 @@ const ChatHistory: React.FC = () => {
   };
 
   const sendMessage = () => {
-    if (message.trim()) {
+    if (message.trim() && socket) { // Ensure socket is initialized
       const chatData: Message = {
         receiverId,
         senderId,
@@ -76,14 +82,17 @@ const ChatHistory: React.FC = () => {
         username,
         timestamp: new Date(),
       };
-
-      socket.emit("send_message", chatData);
-
-      setChatHistory((prev) => [...prev, chatData]);
-      setMessage("");
+  
+      socket.emit("send_message", chatData);  // Emit message if socket is initialized
+  
+      setChatHistory((prev) => [...prev, chatData]);  // Add the message to chat history
+      setMessage("");  // Clear the input field
+    } else {
+      console.error("Socket is not initialized or message is empty.");
     }
   };
-
+  
+  
   return (
     <div className="flex h-[80vh] bg-gray-100">
       {/* Contacts Section */}

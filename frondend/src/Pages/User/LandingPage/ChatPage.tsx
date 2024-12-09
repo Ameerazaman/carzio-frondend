@@ -25,9 +25,8 @@ const ChatPage: React.FC<ChatProps> = ({ senderId, receiverId, username }) => {
     const chatEndRef = useRef<HTMLDivElement>(null); // Reference to the chat end
 
     useEffect(() => {
-        // Initialize socket connection once
-        const socket = io("https://carzio.store/api",);
-
+        const socket = io("https://carzio.store");
+        // const socket = io("http://localhost:5000");
         // Fetch chat history
         const fetchChatHistory = async () => {
             const response = await fetchChat(senderId, receiverId);
@@ -44,6 +43,7 @@ const ChatPage: React.FC<ChatProps> = ({ senderId, receiverId, username }) => {
         }
         // Listen for new messages
         socket.on("receive_message", (newMessage: Message) => {
+            console.log(newMessage,"mesage")
             if (newMessage.senderId === receiverId || newMessage.receiverId === receiverId) {
                 setChatHistory((prev) => [...prev, newMessage]);
             }
@@ -64,19 +64,24 @@ const ChatPage: React.FC<ChatProps> = ({ senderId, receiverId, username }) => {
     }, [chatHistory]); // Trigger when the chatHistory changes
 
     const sendMessage = () => {
-        if (message.trim() && socket) {
-            const chatData = {
-                senderId: senderId,
-                receiverId,
-                message,
-                username,
-                timestamp: new Date(),
-            };
-            socket.emit("send_message", chatData);
-            setChatHistory((prev) => [chatData, ...prev]); // Add the message at the top
-            setMessage("");
+        if (message.trim() && socket) {  // Check if socket is not null
+          const chatData: Message = {
+            receiverId,
+            senderId,
+            message,
+            username,
+            timestamp: new Date(),
+          };
+      
+          socket.emit("send_message", chatData);  // Send the message
+      
+          setChatHistory((prev) => [...prev, chatData]);  // Add the message to the history
+          setMessage("");  // Clear the message input
+        } else {
+          console.error("Socket is not initialized yet or message is empty.");
         }
-    };
+      };
+      
 
     return (
         <div className="chat-container max-w-2xl mx-auto mt-10 p-6 bg-gradient-to-t from-grey-100 via-indigo-100 to-purple-100 rounded-lg shadow-xl">
