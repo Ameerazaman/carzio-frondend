@@ -62,7 +62,6 @@ function ProviderLogin() {
         localStorage.setItem('token', response.data.token); // Store the token
         navigate('/provider/home'); // Redirect to home page
       } else {
-
         navigate('/provider/login'); // Redirect back to login page if failed
       }
 

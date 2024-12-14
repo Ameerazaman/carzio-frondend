@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../App/Store';
 import { User } from '../Common/Navbar';
 import { FaUpload } from 'react-icons/fa'; // Importing upload icon
+import { useNavigate } from 'react-router-dom';
 
 // Define the type for the profile fields
 export type ProfileType = {
@@ -34,7 +35,7 @@ const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [errors, setErrors] = useState<Partial<ProfileType>>({});
   const [selectedImage, setSelectedImage] = useState<File | null>(null); // Image file state
-
+  const navigate = useNavigate()
   // Fetch profile data when the component mounts or when provider changes
   useEffect(() => {
     const fetchProfile = async () => {
@@ -51,6 +52,10 @@ const ProfilePage = () => {
         } catch (error) {
           toast.error('Error fetching profile data.');
         }
+      }
+      else {
+        navigate('/provider/login')
+        return
       }
     };
 

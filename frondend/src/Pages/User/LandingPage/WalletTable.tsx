@@ -13,7 +13,8 @@ function WalletTable({ walletData }: walletDataUserProps) {
         <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
             <tr className="bg-gray-800 text-white text-sm leading-normal">
-              <th className="py-3 px-6 text-left">Transaction ID</th>
+              <th className="py-3 px-6 text-left">No</th>
+              <th className="py-3 px-6 text-left">Date</th>
               <th className="py-3 px-6 text-left">Description</th>
               <th className="py-3 px-6 text-left">Type</th>
               <th className="py-3 px-6 text-left">Amount</th>
@@ -21,9 +22,10 @@ function WalletTable({ walletData }: walletDataUserProps) {
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
-            {walletData.map((transaction) => (
+            {walletData.map((transaction, index) => (
               <tr key={transaction._id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{transaction._id}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{index + 1}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{transaction.createdAt}</td>
 
                 <td className="py-3 px-6 text-left">{transaction.Description}</td>
                 <td className="py-3 px-6 text-left">

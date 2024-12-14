@@ -6,6 +6,7 @@ import Table from '../../Pages/Admin/Commons/Table';
 import { fetchOffer } from '../../Api/Admin';
 import { Link } from 'react-router-dom';
 import Pagination from '../../Pages/Common/Pagination';
+import Loading from '../../Pages/Common/Loading';
 
 function OfferMgt() {
   const [tableData, setTableData] = useState<Array<{ [key: string]: any }>>([]);
@@ -65,7 +66,7 @@ function OfferMgt() {
               </Link>
             </div>
             {loading ? (
-              <p className="text-center py-4">Loading...</p>
+              <p className="text-center py-4"><Loading/></p>
             ) : error ? (
               <div className="flex flex-col items-center justify-center min-h-full animate-fade-in">
                 <div className="text-2xl font-semibold text-gray-600 mb-4 animate-shake">

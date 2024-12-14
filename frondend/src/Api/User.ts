@@ -327,11 +327,12 @@ const userIdStoredInCoupon = async (coupon: string, userId: string,) => {
 // ****************************Booking Page ***************************
 const getBookingHistory = async (userId: string, page: number, limit: number) => {
     try {
+        console.log("get booking history")
         const result = await userApi.get(userRouter.bookingHistory, {
             params: {
-                userId,
-                page,
-                limit
+                userId, // Should be a valid user ID
+                page, // Ensure page is a number
+                limit, // Ensure limit is a number
             }
         });
         return result;

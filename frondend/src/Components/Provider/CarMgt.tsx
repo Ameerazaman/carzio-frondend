@@ -6,6 +6,7 @@ import Sidebar from "../../Pages/Provider/Sidebar";
 import Pagination from "../../Pages/Common/Pagination";
 import { useSelector } from "react-redux";
 import { RootState } from "../../App/Store";
+import { useNavigate } from "react-router-dom";
 
 function CarMgt() {
   const provider = useSelector(
@@ -17,6 +18,7 @@ function CarMgt() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  let navigate = useNavigate()
   const limit = 10;
 
   useEffect(() => {
@@ -32,6 +34,10 @@ function CarMgt() {
           } else {
             setError("No car data returned.");
           }
+        }
+        else {
+          navigate('/provider/login')
+          return
         }
       } catch (error) {
         setError("Error fetching car data.");

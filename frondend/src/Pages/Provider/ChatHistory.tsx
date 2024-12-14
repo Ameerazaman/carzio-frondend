@@ -33,22 +33,22 @@ const ChatHistory: React.FC = () => {
     const newSocket = io("https://carzio.store");
     // const newSocket = io("http://localhost:5000");
     setSocket(newSocket);  // Set the socket
-  
+
     const fetchUsers = async () => {
       try {
         const result = await fetchUsersChat(senderId);
         const usersData = result.data as Message[];
         const uniqueUsers = Array.from(new Map(usersData.map((user: Message) => [user.senderId, user])).values());
         setUsers(uniqueUsers);
-  
+
         if (senderId && newSocket) {
           newSocket.emit("register", senderId);  // Register when socket is initialized
         }
-  
+
         newSocket.on("receive_message", (newMessage: Message) => {
           setChatHistory((prev) => [...prev, newMessage]);
         });
-  
+
         // Cleanup function to disconnect the socket when the component unmounts or senderId changes
         return () => {
           newSocket.disconnect();
@@ -57,10 +57,10 @@ const ChatHistory: React.FC = () => {
         console.error("Error fetching users:", error);
       }
     };
-  
+
     fetchUsers();
   }, [senderId]);  // Re-run the effect when senderId changes
-  
+
 
   const selectUser = async (user: Message) => {
     setSelectedUser(user);
@@ -82,17 +82,17 @@ const ChatHistory: React.FC = () => {
         username,
         timestamp: new Date(),
       };
-  
+
       socket.emit("send_message", chatData);  // Emit message if socket is initialized
-  
+
       setChatHistory((prev) => [...prev, chatData]);  // Add the message to chat history
       setMessage("");  // Clear the input field
     } else {
       console.error("Socket is not initialized or message is empty.");
     }
   };
-  
-  
+
+
   return (
     <div className="flex h-[80vh] bg-gray-100">
       {/* Contacts Section */}
@@ -155,8 +155,8 @@ const ChatHistory: React.FC = () => {
                   >
                     <div
                       className={`p-2 rounded shadow-sm text-sm max-w-xs break-words ${isSender
-                          ? "bg-gray-800 text-white"
-                          : "bg-gray-200 text-gray-800"
+                        ? "bg-gray-800 text-white"
+                        : "bg-gray-200 text-gray-800"
                         }`}
                     >
                       <p>{msg.message}</p>

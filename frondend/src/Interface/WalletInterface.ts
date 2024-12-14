@@ -5,6 +5,7 @@ export interface walletInterface {
     TransactionType: "Credit" | "Debit"; 
     Amount: number;
     bookingId:string;
-    totalAmt:number
+    totalAmt:number;
+    createdAt:string
   }
   

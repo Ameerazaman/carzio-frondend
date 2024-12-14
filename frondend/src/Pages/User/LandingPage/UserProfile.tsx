@@ -5,15 +5,15 @@ import { useCallback, useEffect, useState } from 'react';
 import { ProfileInterface } from '../../../Interface/ProfileInterface';
 
 import toast from 'react-hot-toast';
-import {  editProfile, checkProfile, saveProfileData } from '../../../Api/User';
+import { editProfile, checkProfile, saveProfileData } from '../../../Api/User';
 import UserAddress from './UserAdress';
 
 const UserProfile = () => {
-    const user = useSelector((state: RootState) => state.user .currentUser) as User | null;
+    const user = useSelector((state: RootState) => state.user.currentUser) as User | null;
     const [isEditing, setIsEditing] = useState(false);
     const [errors, setErrors] = useState<Partial<ProfileInterface>>({});
     const [profileId, setProfileId] = useState('');
-    const[addressId,setAddressId]=useState('')
+    const [addressId, setAddressId] = useState('')
     const [profile, setProfile] = useState<ProfileInterface>({
         name: '',
         email: '',
@@ -24,13 +24,13 @@ const UserProfile = () => {
     });
 
     useEffect(() => {
-        
+
         const fetchProfile = async () => {
             if (user) {
-                
+
                 try {
                     const result = await checkProfile(user._id);
-                   
+
                     if (result?.status === 200) {
                         setProfile(result.data);
                         setProfileId(result.data._id);
@@ -119,26 +119,26 @@ const UserProfile = () => {
 
         try {
             if (isEditing) {
-               
                 const result = await editProfile(formData, profileId);
                 if (result) {
-                    setIsEditing(true)
+                    toast.success('Profile updated successfully.');
+                    setIsEditing(true); // Update flag to indicate editing is complete
                 } else {
-                    toast.error('Failed to update profile.');
+                    toast.error('Failed to update profile. Please check your data and try again.');
                 }
             } else {
-               
                 const result = await saveProfileData(formData);
-                setIsEditing(true)
                 if (result) {
-    
+                    toast.success('Profile saved successfully.');
+                    setIsEditing(true); // Enable editing mode for subsequent updates
                 } else {
-                    toast.error('Failed to save profile.');
+                    toast.error('Failed to save profile. Please check your data and try again.');
                 }
             }
         } catch (error) {
-            toast.error('Error saving profile. Please try again.');
+            toast.error('An unexpected error occurred while saving the profile. Please try again.');
         }
+
     };
     return (
         <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 pt-0">

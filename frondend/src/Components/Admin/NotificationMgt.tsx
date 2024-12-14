@@ -4,6 +4,7 @@ import Sidebar from '../../Pages/Admin/Commons/Sidebar'; // Adjust path if neces
 import Table from '../../Pages/Admin/Commons/Table'; // Adjust path if necessary
 import { fetchNotification } from '../../Api/Admin'; // Import provider management API
 import Pagination from '../../Pages/Common/Pagination';
+import Loading from '../../Pages/Common/Loading';
 
 function NotificationMgt() {
   const [tableData, setTableData] = useState<Array<{ [key: string]: any }>>([]);
@@ -50,7 +51,7 @@ function NotificationMgt() {
 
           <div className="overflow-x-auto bg-white rounded-lg shadow-md">
             {loading ? (
-              <p className="text-center py-4">Loading...</p>
+              <p className="text-center py-4"><Loading/></p>
 
             ) : tableData.length === 0 ? (
               <div className="flex flex-col items-center justify-center min-h-full animate-fade-in">

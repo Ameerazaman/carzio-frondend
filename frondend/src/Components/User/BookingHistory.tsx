@@ -8,6 +8,7 @@ import { Booking } from '../../Interface/BookinDetailsInterface';
 import { getBookingHistory } from '../../Api/User';
 import Footer from '../../Pages/Common/Footer';
 import Loading from '../../Pages/Common/Loading';
+import { useNavigate } from 'react-router-dom';
 
 
 function BookingHistory() {
@@ -17,12 +18,15 @@ function BookingHistory() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  const navigate=useNavigate()
   let limit = 10;
 
   useEffect(() => {
+   
     const fetchBookingHistory = async () => {
       if (user?._id) {
         try {
+          console.log("fetch booking history")
           const result = await getBookingHistory(user._id, page, limit); // Pass them as separate arguments
           setBookingHistory(result.data.data);
 
@@ -33,6 +37,9 @@ function BookingHistory() {
           setLoading(false);
 
         }
+      }
+      else{
+        navigate('/login')
       }
     };
 

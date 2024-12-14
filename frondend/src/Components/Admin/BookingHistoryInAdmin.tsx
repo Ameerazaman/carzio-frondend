@@ -5,6 +5,7 @@ import { Booking } from '../../Interface/BookinDetailsInterface';
 import { getBookingHistory } from '../../Api/Admin'; // Adjusted for Admin API
 import BookingHistoryAdmin from '../../Pages/Admin/BookingHistoryAdmin';
 import Pagination from '../../Pages/Common/Pagination';
+import Loading from '../../Pages/Common/Loading';
 
 function BookingHistoryInAdmin() {
   const [bookingHistory, setBookingHistory] = useState<Booking[]>([]); // Default to empty array
@@ -53,7 +54,7 @@ function BookingHistoryInAdmin() {
         <Sidebar />
         <div className="flex-grow p-4 overflow-y-auto">
           {loading ? (
-            <p className="text-center py-4">Loading...</p>
+            <p className="text-center py-4"><Loading/></p>
           ) : error ? (
             <p className="text-center py-4 text-red-600">{error}</p>
           ) : bookingHistory.length === 0 ? (

@@ -7,6 +7,7 @@ import { Booking } from '../../Interface/BookinDetailsInterface';
 import { getBookingHistory } from '../../Api/Provider';
 import Sidebar from '../../Pages/Provider/Sidebar';
 import BookingHistoryProvider from '../../Pages/Provider/BookingHistoryProvider';
+import { useNavigate } from 'react-router-dom';
 
 function BookingHistoryInProvider() {
   const provider = useSelector((state: RootState) => state.provider.currentProvider) as User | null;
@@ -15,6 +16,7 @@ function BookingHistoryInProvider() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  let navigate=useNavigate()
   const limit = 10;
 
   useEffect(() => {
@@ -32,6 +34,9 @@ function BookingHistoryInProvider() {
         } finally {
           setLoading(false);
         }
+      }
+      else{
+        navigate('/provider/login')
       }
     };
 

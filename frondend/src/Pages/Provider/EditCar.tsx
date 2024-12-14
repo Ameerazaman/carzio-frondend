@@ -51,7 +51,8 @@ const EditCar: React.FC = () => {
 
                 }
             } else {
-
+                navigate('/provider/login')
+                return
             }
         };
 

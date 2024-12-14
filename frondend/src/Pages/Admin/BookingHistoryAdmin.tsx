@@ -8,8 +8,8 @@ interface TableProps {
 
 }
 
-const BookingHistoryAdmin : React.FC<TableProps> = ({ bookingHistory: initialTableData }) => {
- 
+const BookingHistoryAdmin: React.FC<TableProps> = ({ bookingHistory: initialTableData }) => {
+
   const [bookingHistory, setBookingHistory] = useState(initialTableData);
 
   return (
@@ -18,7 +18,7 @@ const BookingHistoryAdmin : React.FC<TableProps> = ({ bookingHistory: initialTab
         <table className="min-w-full bg-white shadow-lg rounded-lg overflow-hidden">
           <thead>
             <tr className="bg-gray-800 text-white text-sm leading-normal">
-              <th className="py-3 px-6 text-left">Booking ID</th>
+              <th className="py-3 px-6 text-left">No</th>
               <th className="py-3 px-6 text-left">Car Name</th>
               <th className="py-3 px-6 text-left">Car Image</th>
               <th className="py-3 px-6 text-left">Issue Date</th>
@@ -30,9 +30,9 @@ const BookingHistoryAdmin : React.FC<TableProps> = ({ bookingHistory: initialTab
             </tr>
           </thead>
           <tbody className="text-gray-600 text-sm font-light">
-            {bookingHistory.map((order) => (
+            {bookingHistory.map((order, index) => (
               <tr key={order._id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{order._id}</td>
+                <td className="py-3 px-6 text-left whitespace-nowrap">{index + 1}</td>
                 <td className="py-3 px-6 text-left">{order.bookingDetails.car_name}</td>
 
                 <td className="py-3 px-6 text-left">

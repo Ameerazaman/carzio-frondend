@@ -4,6 +4,7 @@ import Sidebar from '../../Pages/Admin/Commons/Sidebar';
 import { carManagementt, fetchSalesReport, userManagement } from '../../Api/Admin';
 import Pagination from '../../Pages/Common/Pagination';
 import Report from '../../Pages/Common/Report';
+import Loading from '../../Pages/Common/Loading';
 function BookingReport() {
   const [tableData, setTableData] = useState<Array<{ [key: string]: any }>>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -46,7 +47,7 @@ function BookingReport() {
         <div className="flex-1 p-6 bg-gray-100">
           <div className="overflow-x-auto bg-white rounded-lg shadow-md">
             {loading ? (
-              <p className="text-center py-4">Loading...</p>
+              <p className="text-center py-4"><Loading/></p>
             ) : error ? (
               <p className="text-center py-4 text-red-600">{error}</p>
             ) : (

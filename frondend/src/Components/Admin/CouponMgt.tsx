@@ -6,6 +6,7 @@ import Table from '../../Pages/Admin/Commons/Table';
 import { fetchCoupon} from '../../Api/Admin';
 import { Link } from 'react-router-dom';
 import Pagination from '../../Pages/Common/Pagination';
+import Loading from '../../Pages/Common/Loading';
 
 function CouponMgt() {
   const [tableData, setTableData] = useState<Array<{ [key: string]: any }>>([]);
@@ -63,7 +64,7 @@ function CouponMgt() {
               </Link>
             </div>
             {loading ? (
-              <p className="text-center py-4">Loading...</p>
+              <p className="text-center py-4"><Loading/></p>
             ) : error ? (
               <p className="text-center py-4 text-red-600">{error}</p>
             ) : (

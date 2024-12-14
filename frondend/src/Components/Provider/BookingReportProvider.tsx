@@ -6,6 +6,7 @@ import Navbar, { User } from "../../Pages/Common/Navbar";
 import { fetchSalesReport } from "../../Api/Provider";
 import { useSelector } from "react-redux";
 import { RootState } from "../../App/Store";
+import { useNavigate } from "react-router-dom";
 
 function BookingReportProvider() {
   const provider = useSelector(
@@ -17,6 +18,7 @@ function BookingReportProvider() {
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState<number>(1);
+  let navigate=useNavigate()
   const limit = 10;
 
   useEffect(() => {
@@ -33,6 +35,10 @@ function BookingReportProvider() {
           } else {
             setError("Sales report is not retrieved.");
           }
+        }
+        else{
+          navigate('/provider/login')
+          return
         }
       } catch (error) {
         setError("Failed to fetch the sales report.");

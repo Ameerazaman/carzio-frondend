@@ -70,32 +70,38 @@ function UserAddress({ onAddressIdChange }: AddressMgtInProps) {
 
     const saveAddress = async (e: React.FormEvent) => {
         e.preventDefault();
+    
         if (!validateAddress()) {
-            toast.error('Please fill all fields correctly.');
+            toast.error('Please fill out all required fields correctly.');
             return;
         }
-
+    
         const formData = { ...currentAddress };
+    
         try {
             const result = isEditingAddress
                 ? await editAddress(formData, addressId)
                 : await saveAddressData(formData);
-
+    
             if (result?.status === 200) {
                 if (!isEditingAddress) {
                     const newAddressId = result.data._id;
                     setAddressId(newAddressId);
                     onAddressIdChange(newAddressId);
+                    toast.success('Address saved successfully.');
                     setIsEditingAddress(true);
+                } else {
+                    toast.success('Address updated successfully.');
                 }
             } else {
-                toast.error('Failed to save address.');
+                toast.error('Failed to save the address. Please try again.');
             }
         } catch (error) {
             console.error('Error saving address:', error);
-            toast.error('Error saving address. Please try again.');
+            toast.error('An unexpected error occurred while saving the address. Please try again later.');
         }
     };
+    
 
     return (
         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl mb-8">

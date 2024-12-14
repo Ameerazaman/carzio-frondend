@@ -46,8 +46,10 @@ const Carosel: React.FC<CarouselProps> = ({ onEvent }) => {
 
     try {
       const result = await searchCarAvailabilty(startString, endString);
-      const cars = result.data.data; // Assume this returns an array of CarDataInterface
-      setCarData(cars); // Update local state
+      console.log(result.data, "result")
+      const cars = result?.data; // Assume this returns an array of CarDataInterface
+      setCarData(cars);
+      console.log(carData) // Update local state
       onEvent(cars); // Pass the full data to the Home component
     } catch (error) {
 

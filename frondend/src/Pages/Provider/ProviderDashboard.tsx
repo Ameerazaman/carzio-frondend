@@ -16,6 +16,7 @@ import { getDashboardConstData } from '../../Api/Provider';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../App/Store';
 import { User } from '../Common/Navbar';
+import { useNavigate } from 'react-router-dom';
 
 // Register ChartJS components
 ChartJS.register(
@@ -33,7 +34,7 @@ ChartJS.register(
 const ProviderDashboard: React.FC = () => {
   const provider = useSelector((state: RootState) => state.provider.currentProvider) as User | null;
   const providerId = provider?._id;
-
+  const navigate = useNavigate()
   const [totalCars, setTotalCars] = useState<number>(0);
   const [totalRevenue, setTotalRevenue] = useState<number>(0);
   const [carRevenueData, setCarRevenueData] = useState<{ carName: string; amount: number }[]>([]);
@@ -50,6 +51,10 @@ const ProviderDashboard: React.FC = () => {
         setCarRevenueData(result.data.revenueByCar);
         setCarBookingData(result.data.totalBookingCount);
         setCarBookingTotal(result.data.totalBooking);
+      }
+      else {
+        navigate('/provider/login')
+        return
       }
     };
 
@@ -148,25 +153,62 @@ const ProviderDashboard: React.FC = () => {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg min-h-screen">
-     
+
       {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div className="text-center">
-          <h3 className="text-xl font-semibold">Total Cars</h3>
-          <div className="text-3xl text-red-500">{totalCars}</div>
-          <Doughnut data={carDoughnutData} options={doughnutOptions} />
+          <h3 className="text-lg font-medium">Total Cars</h3>
+          <div className="text-2xl text-red-500">{totalCars}</div>
+          <div style={{ height: '200px', width: '200px', margin: '0 auto' }}>
+            <Doughnut
+              data={carDoughnutData}
+              options={{
+                ...doughnutOptions,
+                plugins: {
+                  legend: {
+                    display: false, // Hide legend to save space
+                  },
+                },
+              }}
+            />
+          </div>
         </div>
         <div className="text-center">
-          <h3 className="text-xl font-semibold">Total Bookings</h3>
-          <div className="text-3xl text-yellow-500">{carBookingTotal}</div>
-          <Doughnut data={carBookingDoughnutData} options={doughnutOptions} />
+          <h3 className="text-lg font-medium">Total Bookings</h3>
+          <div className="text-2xl text-yellow-500">{carBookingTotal}</div>
+          <div style={{ height: '200px', width: '200px', margin: '0 auto' }}>
+            <Doughnut
+              data={carBookingDoughnutData}
+              options={{
+                ...doughnutOptions,
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+              }}
+            />
+          </div>
         </div>
         <div className="text-center">
-          <h3 className="text-xl font-semibold">Total Revenue</h3>
-          <div className="text-3xl text-green-500">${totalRevenue.toLocaleString()}</div>
-          <Doughnut data={revenueDoughnutData} options={doughnutOptions} />
+          <h3 className="text-lg font-medium">Total Revenue</h3>
+          <div className="text-2xl text-green-500">{totalRevenue.toLocaleString()}</div>
+          <div style={{ height: '200px', width: '200px', margin: '0 auto' }}>
+            <Doughnut
+              data={revenueDoughnutData}
+              options={{
+                ...doughnutOptions,
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
+
 
       {/* Charts Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -4,6 +4,7 @@ import Sidebar from '../../Pages/Admin/Commons/Sidebar'; // Adjust path if neces
 import Table from '../../Pages/Admin/Commons/Table'; // Adjust path if necessary
 import { providerManagement } from '../../Api/Admin'; // Import provider management API
 import Pagination from '../../Pages/Common/Pagination';
+import Loading from '../../Pages/Common/Loading';
 
 function ProviderMgt() {
   const [tableData, setTableData] = useState<Array<{ [key: string]: any }>>([]);
@@ -54,7 +55,7 @@ function ProviderMgt() {
           <h1 className="text-2xl font-bold mb-4">Provider Management</h1>
           <div className="overflow-x-auto bg-white rounded-lg shadow-md">
             {loading ? (
-              <p className="text-center py-4">Loading...</p>
+              <p className="text-center py-4"><Loading/></p>
             ) : error ? (
               <p className="text-center py-4 text-red-600">{error}</p>
             ) : (

@@ -4,6 +4,7 @@ import Sidebar from '../../Pages/Admin/Commons/Sidebar';
 import Table from '../../Pages/Admin/Commons/Table';
 import { carManagementt } from '../../Api/Admin';
 import Pagination from '../../Pages/Common/Pagination';
+import Loading from '../../Pages/Common/Loading';
 
 function CarsMgt() {
   const [tableData, setTableData] = useState<Array<{ [key: string]: any }>>([]);
@@ -52,7 +53,7 @@ function CarsMgt() {
           <h1 className="text-2xl font-bold mb-4">Car Management</h1>
           <div className="flex-1 bg-white rounded-lg shadow-md">
             {loading ? (
-              <p className="text-center py-4">Loading...</p>
+              <p className="text-center py-4"><Loading/></p>
             ) : error ? (
               <p className="text-center py-4 text-red-600">{error}</p>
             ) : (
